@@ -1,2 +1,60 @@
+<% content_for :js_includes do %>
+
+<% end %>
+<% content_for :head do %>
+
+<% end %>
+<% content_for :slideshow do %>
+	<%= stylesheet_link_tag    "slideshow", :media => "all" %>
+<% end %>
 <h1>Welcome to the Rails Installer Demo!!!</h1>
 <%= link_to "Items", items_path %>
+
+<% content_for :body do %>
+<section id="item-page">
+
+    <div class="title">
+        <h1>Nikon D3100 DSLR Camera Body</h1>
+    
+        <h2 class="price">$12/day </h2>
+    </div><!-- title -->
+    
+    
+    <div id="image-gallery">
+        <link rel="stylesheet" href="slideshow.css" type="text/css">  
+
+            <div id="slider">
+                <a class="button prev" href="#" rel="nofollow"><img src="images/prev.png"/></a>
+                <a class="button next" href="#" rel="nofollow"><img src="images/next.png"/></a>
+                <div class="holder_cont">
+                    <ul class="holder">
+                      <li class="slide first">
+                      </li>                            
+                    </ul>
+                </div>
+                <!--div class="clear"></div-->                            
+           </div><!-- slider -->
+
+
+    </div><!-- slideshow -->
+    
+    <div class="item-page-info">
+        <h3>Seller: </h3><p><a href="profile.html">Shooeylooey</a></p><br>
+        <h4>Seller Rating: </h4><p>98% positive</p><br>
+    
+        <div id="map_canvas">
+    
+        </div>
+    
+        <h3>Item Rating:</h3><br>
+        <h4>Condition:</h4><p>Moderately Used</p><br>
+    </div> <!-- item-page-info -->
+    
+    <div class="item-description">
+        <h3>Item Description:</h3>
+    
+        <h3>Rental History:</h3>
+    </div> <!-- item-description--> 
+  </section> <!-- page -->
+
+  <% end %>
