@@ -9624,7 +9624,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
   });
 
        $(window).load(function(){                            
-            var images = ['images/D3100.jpg', 'images/18-55_work.jpg', 'images/55_300_work.jpg'];
+            var images = ['../images/D3100.jpg', '../images/18-55_work.jpg', '../images/55_300_work.jpg'];
             $('#slider').append('<img src="images/loader.gif" id="slider_loader" style="position:absolute; top:45%; left:45%;"/>');
             $.preloadImages(images, init);
             function init()
