@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RailsinstallerDemo</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title>Neub - Try it!</title>
+  <%= stylesheet_link_tag    "style", :media => "all" %>
+  <%= yield(:slideshow) %>
+  <%= yield(:js_includes) %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= yield(:head) %>
 </head>
-<body>
-
+<body style="background: #EEEEEE;">
+		<header> 
+	    <input type="search" results="10" size="30" placeholder="Search" id="search-bar" />
+	    
+	    <h1 id="logo"><a href="#">Neub</a></h1>
+	   
+	    <h2 id="login"><a href="#"><u>Log In</u></a></h2>
+  	</header>
 <%= yield %>
+
+<%= yield(:body) %>
 
 </body>
 </html>
