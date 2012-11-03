@@ -1,4 +1,4 @@
-
+  <%= javascript_include_tag "application" %>
 <% content_for :js_includes do %>
 
 <% end %>
@@ -61,41 +61,6 @@
   <% end %>
   
   
-<h1>Listing items</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Category</th>
-    <th>Location</th>
-    <th>Price</th>
-    <th>Date</th>
-    <th>Rating</th>
-    <th>Condition</th>
-    <th>Seller</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @items.each do |item| %>
-  <tr>
-    <td><%= item.title %></td>
-    <td><%= item.category %></td>
-    <td><%= item.location %></td>
-    <td><%= item.price %></td>
-    <td><%= item.date %></td>
-    <td><%= item.rating %></td>
-    <td><%= item.condition %></td>
-    <td><%= item.seller %></td>
-    <td><%= item.description %></td>
-    <td><%= link_to 'Show', item %></td>
-    <td><%= link_to 'Edit', edit_item_path(item) %></td>
-    <td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
 
 <br />
 
