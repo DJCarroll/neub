@@ -1,0 +1,86 @@
+<!-- Written by Tommy Shiou -->
+
+<html>
+  <head>
+    <title>Neub - Try it!</title>
+    <link rel="stylesheet" href="style.css" type="text/css">    
+            <script type="text/javascript" src="js/jquery.min.js"></script>
+            <script type="text/javascript" src="js/slider.js"></script>
+
+
+
+       <script type = "text/javascript">
+           $(window).load(function(){                            
+                var images = ['images/D3100.jpg', 'images/18-55_work.jpg', 'images/55_300_work.jpg'];
+                $('#slider').append('<img src="images/loader.gif" id="slider_loader" style="position:absolute; top:45%; left:45%;"/>');
+                $.preloadImages(images, init);
+                function init()
+                {
+                    $('#slider_loader').remove();
+                    $('#slider').imgSlider(images);
+                }                            
+           });
+       </script>
+
+  </head>
+
+
+  <body>
+  
+  <header> 
+    <input type="search" results="10" size="30" placeholder="Search" id="search-bar" />
+    
+    <h1 id="logo"><a href="#">Neub</a></h1>
+   
+    <h2 id="login"><a href="#"><u>Log In</u></a></h2>
+    
+  </header>
+  
+  <section id="item-page">
+
+    <div class="title">
+        <h1>Nikon D3100 DSLR Camera Body</h1>
+    
+        <h2 class="price">$12/day </h2>
+    </div><!-- title -->
+    
+    
+    <div id="image-gallery">
+        <link rel="stylesheet" href="slideshow.css" type="text/css">  
+
+            <div id="slider">
+                <a class="button prev" href="#" rel="nofollow"><img src="images/prev.png"/></a>
+                <a class="button next" href="#" rel="nofollow"><img src="images/next.png"/></a>
+                <div class="holder_cont">
+                    <ul class="holder">
+                      <li class="slide first">
+                      </li>                            
+                    </ul>
+                </div>
+                <!--div class="clear"></div-->                            
+           </div><!-- slider -->
+
+
+    </div><!-- slideshow -->
+    
+    <div class="item-page-info">
+        <h3>Seller: </h3><p><a href="profile.html">Shooeylooey</a></p><br>
+        <h4>Seller Rating: </h4><p>98% positive</p><br>
+    
+        <div class="directions">
+    
+        </div>
+    
+        <h3>Item Rating:</h3><br>
+        <h4>Condition:</h4><p>Moderately Used</p><br>
+    </div> <!-- item-page-info -->
+    
+    <div class="item-description">
+        <h3>Item Description:</h3>
+    
+        <h3>Rental History:</h3>
+    </div> <!-- item-description--> 
+  </section> <!-- page -->
+  </body>
+
+</html>

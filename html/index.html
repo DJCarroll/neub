@@ -1,0 +1,597 @@
+<!-- Written by Tommy Shiou -->
+
+<html>
+  <head>
+    <title>Neub - Try it!</title>
+    <link rel="stylesheet" href="style.css" type="text/css">    
+
+	<script src="js/jquery-latest.js"></script>
+	<script src="js/jquery.isotope.min.js"></script>
+  <script>
+
+  $.Isotope.prototype._masonryResizeChanged = function() {
+    return true;
+  };
+    // corner stamp
+  $.Isotope.prototype._masonryReset = function() {
+    // layout-specific props
+    this.masonry = {};
+    this._getSegments();
+    var i = this.masonry.cols;
+    this.masonry.colYs = [];
+    while (i--) {
+      this.masonry.colYs.push( 0 );
+    }
+  
+    if ( this.options.masonry.cornerStampSelector ) {
+      var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
+          stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
+          cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
+          cornerStampHeight = $cornerStamp.outerHeight(true);
+      for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
+        this.masonry.colYs[i] = cornerStampHeight;
+      }
+    }
+  };
+
+    // centering
+    $.Isotope.prototype._getCenteredMasonryColumns = function() {
+      this.width = this.element.width();
+      
+      var parentWidth = this.element.parent().width();
+      
+                    // i.e. options.masonry && options.masonry.columnWidth
+      var colW = this.options.masonry && this.options.masonry.columnWidth ||
+                    // or use the size of the first item
+                    this.$filteredAtoms.outerWidth(true) ||
+                    // if there's no items, use size of container
+                    parentWidth;
+      
+      var cols = Math.floor( parentWidth / colW );
+      cols = Math.max( cols, 1 );
+
+      // i.e. this.masonry.cols = ....
+      this.masonry.cols = cols;
+      // i.e. this.masonry.columnWidth = ...
+      this.masonry.columnWidth = colW;
+    };
+    
+    $.Isotope.prototype._masonryReset = function() {
+      // layout-specific props
+      this.masonry = {};
+      // FIXME shouldn't have to call this again
+      this._getCenteredMasonryColumns();
+      var i = this.masonry.cols;
+      this.masonry.colYs = [];
+      while (i--) {
+        this.masonry.colYs.push( 0 );
+      }
+    };
+
+    $.Isotope.prototype._masonryResizeChanged = function() {
+      var prevColCount = this.masonry.cols;
+      // get updated colCount
+      this._getCenteredMasonryColumns();
+      return ( this.masonry.cols !== prevColCount );
+    };
+    
+    $.Isotope.prototype._masonryGetContainerSize = function() {
+      var unusedCols = 0,
+          i = this.masonry.cols;
+      // count unused columns
+      while ( --i ) {
+        if ( this.masonry.colYs[i] !== 0 ) {
+          break;
+        }
+        unusedCols++;
+      }
+      
+      return {
+            height : Math.max.apply( Math, this.masonry.colYs ),
+            // fit container to columns that have been used;
+            width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
+          };
+      };
+
+  $(function(){
+  
+
+    var $container = $('#image_board');  
+
+
+    $container.css({ opacity: 0 });
+
+    $container.isotope({
+        getSortData : {
+          proximity : function( $elem ) {
+            return parseFloat( $elem.attr('data-proximity').replace( /[\(\)]/g, '') );
+          },
+          price : function( $elem ) {
+            return parseFloat( $elem.attr('data-price').replace( /[\(\)]/g, '') );
+            //return parseInt( $elem.attr('data-price'), 10 );
+          }
+        }
+    });
+
+
+    $container.imagesLoaded( function(){
+      $container.isotope({
+        itemSelector : '.item',
+        
+      });
+      $container.animate({ opacity: 1 });
+    });
+   
+      // filtering
+      var $optionSets = $('#options .option-set'),
+          $optionLinks = $optionSets.find('a');
+
+      $optionLinks.click(function(){
+        var $this = $(this);
+        // don't proceed if already selected
+        if ( $this.hasClass('selected') ) {
+          return false;
+        }
+        var $optionSet = $this.parents('.option-set');
+        $optionSet.find('.selected').removeClass('selected');
+
+        
+        $this.addClass('selected');
+  
+        // make option object dynamically, i.e. { filter: '.my-filter-class' }
+        var options = {},
+            key = $optionSet.attr('data-option-key'),
+            value = $this.attr('data-option-value');
+        // parse 'false' as false boolean
+        value = value === 'false' ? false : value;
+        options[ key ] = value;
+        $container.find('corner-stamp').addClass(value);
+        if ( key === 'layoutMode' && typeof changeLayoutMode === 'function' ) {
+          // changes in layout modes need extra logic
+          changeLayoutMode( $this, options )
+        } else {
+          // otherwise, apply new options
+          $container.isotope( options );
+          if(key == 'filter')
+          {
+            document.getElementById("category-heading").innerHTML = this.innerHTML;
+          }
+        }
+
+        return false;
+      });
+
+  });
+
+  </script>
+
+  </head>
+
+
+  <body>
+  
+  <header> 
+    <input type="search" results="10" size="30" placeholder="Search" id="search-bar" />
+    
+    <h1 id="logo"><a href="#">Neub</a></h1>
+   
+    <h2 id="login"><a href="#"><u>Log In</u></a></h2>
+    
+  </header>
+  
+  <section id="page">
+  
+    <div id="image_board" class="transitions-enabled clickable clearfix">
+
+      <div id="options" class="item photography longboarding cycling corner-stamp col1" data-proximity="0" data-price="0">
+        <ul id="menu">
+          <li><a href="#">Categories:</a>
+               <ul id="filters" class="option-set clearfix" data-option-key="filter">
+                <li><a href="#filter" data-option-value="*" class="selected">All Items</a></li>       
+                <li><a href="#filter" data-option-value=".photography">Photography</a></li>
+                <li><a href="#filter" data-option-value=".longboarding">Longboarding</a></li>
+                <li><a href="#filter" data-option-value=".cycling">Cycling</a></li>
+              </ul>
+          </li>
+          <li><a href="#">Sort By:</a>
+              <ul id="sort-by" class="option-set clearfix" data-option-key="sortBy">
+                <li><a href="#sortBy=proximity" data-option-value="proximity">Location</a></li>
+                <li><a href="#sortBy=price" data-option-value="price">Price</a></li>
+                <li><a href="#sortBy=date" data-option-value="date">Upload Date</a></li>
+              </ul>
+          </li>
+          <!--li> Sort
+            <ul id="sort-direction" class="option-set clearfix" data-option-key="sortAscending">
+            <li><a href="#sortAscending=true" data-option-value="true" class="selected">ascending</a></li>
+            <li><a href="#sortAscending=false" data-option-value="false">descending</a></li>
+            </ul>
+          </li-->
+        </ul>
+
+        <h2 id="category-heading" align=right>All Items</h2>
+      </div> <!-- options -->
+
+      <div class="item col1 photography isotope-item" data-category="photography" data-proximity="12" data-price="12">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$12/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/D3100.jpg"/>
+        <div class="item-label">
+          <h1>Nikon D3100</h1>
+        </div>
+      </a>
+      </div>
+      
+      <div class="item col1 cycling" data-proximity="3" data-price="5">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$5/day</h2>
+            <h3 id="proximity-info">3m walk</h3>
+        </div>
+        <img class="item-image" src=" images/kilo_tt.jpg"/>
+        <div class="item-label">
+          <h1>Fixed Gear Kilo TT</h1> 
+        </div>
+      </a>
+      </div>
+    
+      <div class="item col1 photography" data-proximity="12" data-price="7">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$7/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/18-55.jpg"/>
+        <div class="item-label">
+          <h1>NIKKOR 18-55mm Lens</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-category="photography" data-proximity="10" data-price="8">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$8/day</h2>
+            <h3 id="proximity-info">10m walk</h3>
+        </div>
+        <img class="item-image" src=" images/55_300.jpg"/>
+        <div class="item-label">
+          <h1>NIKKOR 55-300mm Lens</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding isotope-item" data-category="longboarding" data-proximity="5" data-price="3">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$3/day</h2>
+            <h3 id="proximity-info">5m walk</h3>
+        </div>
+        <img class="item-image" src=" images/bc_eel.jpg"/>
+        <div class="item-label">
+          <h1>BC Eel</h1>
+        </div>
+      </a>
+      </div>
+   
+      <div class="item col1 longboarding" data-category="longboarding" data-proximity="2" data-price="3.50">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$3.50/day</h2>
+            <h3 id="proximity-info">2m walk</h3>
+        </div>
+        <img class="item-image" src=" images/dervish.jpg"/>
+        <div class="item-label">
+          <h1>Loaded Dervish</h1>
+        </div>
+      </a>
+      </div>
+   
+      <div class="item col1 cycling" data-proximity="15" data-price="1.50">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$1.50/day</h2>
+            <h3 id="proximity-info">15m walk</h3>
+        </div>
+        <img class="item-image" src=" images/fizik_antares.jpg"/>
+        <div class="item-label">
+          <h1>Fizik Antares</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="12" data-price="1">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$1.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/tripod.jpg"/>
+        <div class="item-label">
+          <h1>Sunpak Tripod/Monopod</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="12.5" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/nikon_diffuser.jpg"/>
+        <div class="item-label">
+            <h1>Sigma Ef-530 DG ST E-Flash </h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="1200" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m drive</h3>
+        </div>
+        <img class="item-image" src=" images/photostudio.jpg"/>
+        <div class="item-label">
+            <h1>Home Photo Studio Kit</h1>
+        </div>
+      </a>
+      </div>
+      
+      <div class="item col1 longboarding" data-proximity="600" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">6m drive</h3>
+        </div>
+        <img class="item-image" src=" images/beargrizzly_trucks.jpg"/>
+        <div class="item-label">
+            <h1>Bear Grizzly Longboard Trucks </h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="3" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">3m walk</h3>
+        </div>
+        <img class="item-image" src=" images/otang_wheels2.jpg"/>
+        <div class="item-label">
+            <h1>Orangatang Wheels </h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/canon_100-400.jpg"/>
+        <div class="item-label">
+            <h1>Canon 100-400mm Zoom Lens</h1>
+        </div>
+      </a>
+      </div>
+      
+      <div class="item col1 photography" data-proximity="8" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">8m walk</h3>
+        </div>
+        <img class="item-image" src=" images/HD_video.jpg"/>
+        <div class="item-label">
+            <h1>Panasonic AG_HVX200 P2 Pro HD</h1>
+        </div>
+      </a>
+      </div>
+   
+      <div class="item col1 photography" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/35_lens.jpg"/>
+        <div class="item-label">
+            <h1>NIKKOR 35mm Wide Angle Lens</h1>
+        </div>
+      </a>
+      </div>
+   
+      <div class="item col1 photography" data-proximity="1" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">1m walk</h3>
+        </div>
+        <img class="item-image" src=" images/50mm_lens.jpg"/>
+        <div class="item-label">
+            <h1>NIKKOR 50mm Wide Angle Lens</h1>
+        </div>
+      </a>
+      </div>
+   
+      <div class="item col1 photography" data-proximity="1900" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">19m drive</h3>
+        </div>
+        <img class="item-image" src=" images/pentax-kx.jpg"/>
+        <div class="item-label">
+            <h1>Pentax KX DSLR Camera</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="4" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">4m walk</h3>
+        </div>
+        <img class="item-image" src=" images/otang_wheels.jpg"/>
+        <div class="item-label">
+            <h1>O-Tang Wheels</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="1700" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">17m drive</h3>
+        </div>
+        <img class="item-image" src=" images/Canon_T3i.jpg"/>
+        <div class="item-label">
+            <h1>Canon Rebel T3i</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="8" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">8m walk</h3>
+        </div>
+        <img class="item-image" src=" images/canon_flash.jpg"/>
+        <div class="item-label">
+            <h1>Canon 270 or Canon 430 Flash</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 cycling" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/rbike.jpg"/>
+        <div class="item-label">
+            <h1>Cool Road Bike</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/sector8.jpg"/>
+        <div class="item-label">
+            <h1>Sector 8 Longboard</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 cycling" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/orange_fixie.jpg"/>
+        <div class="item-label">
+            <h1>Custom Orange Fixie - 48mm Top Bar</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 cycling" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/mbike.jpg"/>
+        <div class="item-label">
+            <h1>Cool Mountain Bike</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 photography" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/D90.jpg"/>
+        <div class="item-label">
+            <h1>Nikon D90 DSLR</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/rayne_gloves.jpg"/>
+        <div class="item-label">
+            <h1>Rayne Longboarding Slide Gloves</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/cfiber_longboard.jpg"/>
+        <div class="item-label">
+            <h1>Carbon Fiber Downhill Longboard</h1>
+        </div>
+      </a>
+      </div>
+
+      <div class="item col1 longboarding" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$4.00/day</h2>
+            <h3 id="proximity-info">12m walk</h3>
+        </div>
+        <img class="item-image" src=" images/electric_longboard.jpg"/>
+        <div class="item-label">
+            <h1>Electric Longboard</h1>
+        </div>
+      </a>
+      </div>
+      
+      <div class="item col1 longboarding" data-category="longboarding" data-proximity="12" data-price="4">
+      <a href="item.html">
+        <div class="item-info">
+            <h2 id="price-info">$3.50/day</h2>
+            <h3 id="proximity-info">2m walk</h3>
+        </div>
+        <img class="item-image" src=" images/dervish0.jpg"/>
+        <div class="item-label">
+          <h1>Loaded Dervish</h1>
+        </div>
+      </a>
+      </div>
+      
+      
+    </div> <!-- image_board -->
+    
+  </section> <!-- page -->
+  </body>
+
+</html>

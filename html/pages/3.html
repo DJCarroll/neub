@@ -1,0 +1,91 @@
+<!-- Written by Tommy Shiou -->
+
+<html>
+  <head>
+    <title>Neub - Try it!</title>
+    <link rel="stylesheet" href="style.css" type="text/css">    
+
+	<script src="jquery-latest.js"></script>
+	<script src="jquery.isotope.min.js"></script>
+	<script src="jquery.infinitescroll.min.js"></script>
+  <script>
+
+
+  $(function(){
+  
+
+    var $container = $('#image_board');  
+
+    $container.isotope({
+
+    });
+
+    $container.css({ opacity: 0 });
+
+    $container.imagesLoaded( function(){
+      $container.isotope({
+        itemSelector : '.item'
+      });
+      $container.animate({ opacity: 1 });
+    });
+   
+
+  });
+
+  </script>
+
+  </head>
+
+
+  <body>
+  <section id="page">
+  
+    <div id="image_board" class="infinite-scrolling clearfix">
+
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Random Road Bike I Found Online</h1>
+        <img class="item-image" src=" images/rbike.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Sector 8 Longboard</h1>
+        <img class="item-image" src=" images/sector8.jpg"/>
+      </div>
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Custom Orange Fixie</h1>
+        <img class="item-image" src=" images/orange_fixie.jpg"/>
+      </div>
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Cool-looking Mountain Bike</h1>
+        <img class="item-image" src=" images/mbike.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon D90 DSLR</h1>
+        <img class="item-image" src=" images/D90.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Rayne Longboarding Slide Gloves</h1>
+        <img class="item-image" src=" images/rayne_gloves.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Carbon Fiber Longboard</h1>
+        <img class="item-image" src=" images/cfiber_longboard.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Electric Longboard</h1>
+        <img class="item-image" src=" images/electric_longboard.jpg"/>
+      </div>
+    </div> <!-- image_board -->
+
+    
+  </section> <!-- page -->
+  </body>
+
+</html>

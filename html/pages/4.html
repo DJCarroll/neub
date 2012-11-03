@@ -1,0 +1,213 @@
+<!-- Written by Tommy Shiou -->
+
+<html>
+  <head>
+    <title>Neub - Try it!</title>
+    <link rel="stylesheet" href="style.css" type="text/css">    
+
+	<script src="jquery-latest.js"></script>
+	<script src="jquery.isotope.min.js"></script>
+	<script src="jquery.infinitescroll.min.js"></script>
+  <script>
+
+
+  $(function(){
+  
+
+    var $container = $('#image_board');  
+
+    $container.isotope({
+
+    });
+
+    $container.css({ opacity: 0 });
+
+    $container.imagesLoaded( function(){
+      $container.isotope({
+        itemSelector : '.item',
+        masonry : {
+          cornerStampSelector: '.corner-stamp'
+        }
+      });
+      $container.animate({ opacity: 1 });
+    });
+   
+
+  });
+
+  </script>
+
+  </head>
+
+
+  <body>
+  <section id="page">
+  
+    <div id="image_board" class="infinite-scrolling clearfix">
+
+
+      
+      <div class="item col1 cycling" data-category="cycling">
+        <div class="item-label">
+          <h1>Fixed Gear Kilo TT</h1>
+          <p>$5/day</p>
+        </div>
+        <img class="item-image" src=" images/kilo_tt.jpg"/>
+      </div>
+    
+      <div class="item col1 photography" data-category="photography">
+        <div class="item-label">
+          <h1>NIKKOR 18-55mm Lens</h1>
+          <p>$7/day</p>
+        </div>
+        <img class="item-image" src=" images/18-55.jpg"/>
+      </div>
+
+      <div class="item col1 photography" data-category="photography">
+        <div class="item-label">
+          <h1>NIKKOR 55-300mm Lens</h1>
+          <p>$9/day</p>
+        </div>
+        <img class="item-image" src=" images/55_300.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding" data-category="longboarding">
+        <div class="item-label">
+          <h1>BC Eel</h1>
+          <p>$5/day</p>
+        </div>
+        <img class="item-image" src=" images/bc_eel.jpg"/>
+        
+      </div>
+   
+      <div class="item col1 photography" data-category="photography">
+        <div class="item-label">
+          <h1>Nikon D3100</h1>
+          <p>$12/day</p>
+        </div>
+        <img class="item-image" src=" images/D3100.jpg"/>
+      </div>
+   
+      <div class="item col1 longboarding" data-category="longboarding">
+        <div class="item-label">
+          <h1>Loaded Dervish</h1>
+          <p>$6/day</p>
+        </div>
+        <img class="item-image" src=" images/dervish.jpg"/>
+      </div>
+   
+      <div class="item col1 cycling">
+        <h1 class="item-label">Fizik Antares</h1>
+        <img class="item-image" src=" images/fizik_antares.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Sunpak Tripod/Monopod</h1>
+        <img class="item-image" src=" images/tripod.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Sigma Ef-530 DG ST E-Flash </h1>
+        <img class="item-image" src=" images/nikon_diffuser.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Photo Studio Kit</h1>
+        <img class="item-image" src=" images/photostudio.jpg"/>
+      </div>
+      
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Bear Grizzly Longboard Trucks</h1>
+        <img class="item-image" src=" images/beargrizzly_trucks.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">O-tang Wheels</h1>
+        <img class="item-image" src=" images/otang_wheels2.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon 100-400mm Lens</h1>
+        <img class="item-image" src=" images/canon_100-400.jpg"/>
+      </div>
+      <div class="item col1 photography">
+        <h1 class="item-label">Panasonic AG-HVX200 P2 Pro HD</h1>
+        <img class="item-image" src=" images/HD_video.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">NIKKOR 35mm Wide Angle Lens</h1>
+        <img class="item-image" src=" images/35_lens.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">NIKKOR 50mm Wide Angle Lens</h1>
+        <img class="item-image" src=" images/50mm_lens.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">Pentax-KX Camera Body</h1>
+        <img class="item-image" src=" images/pentax-kx.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">O-Tang Wheels</h1>
+        <img class="item-image" src=" images/otang_wheels.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon Rebel T3i</h1>
+        <img class="item-image" src=" images/Canon_T3i.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon 270 or Canon 430 Flash</h1>
+        <img class="item-image" src=" images/canon_flash.jpg"/>
+      </div>
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Random Road Bike I Found Online</h1>
+        <img class="item-image" src=" images/rbike.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Sector 8 Longboard</h1>
+        <img class="item-image" src=" images/sector8.jpg"/>
+      </div>
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Custom Orange Fixie</h1>
+        <img class="item-image" src=" images/orange_fixie.jpg"/>
+      </div>
+
+      <div class="item col1 cycling">
+        <h1 class="item-label">Cool-looking Mountain Bike</h1>
+        <img class="item-image" src=" images/mbike.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon D90 DSLR</h1>
+        <img class="item-image" src=" images/D90.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Rayne Longboarding Slide Gloves</h1>
+        <img class="item-image" src=" images/rayne_gloves.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Carbon Fiber Longboard</h1>
+        <img class="item-image" src=" images/cfiber_longboard.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Electric Longboard</h1>
+        <img class="item-image" src=" images/electric_longboard.jpg"/>
+      </div>
+    </div> <!-- image_board -->
+
+    
+  </section> <!-- page -->
+  </body>
+
+</html>

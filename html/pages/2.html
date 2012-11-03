@@ -1,0 +1,105 @@
+<!-- Written by Tommy Shiou -->
+
+<html>
+  <head>
+    <title>Neub - Try it!</title>
+    <link rel="stylesheet" href="style.css" type="text/css">    
+
+	<script src="jquery-latest.js"></script>
+	<script src="jquery.isotope.min.js"></script>
+	<script src="jquery.infinitescroll.min.js"></script>
+  <script>
+
+
+  $(function(){
+  
+
+    var $container = $('#image_board');  
+
+    $container.isotope({
+
+    });
+
+    $container.css({ opacity: 0 });
+
+    $container.imagesLoaded( function(){
+      $container.isotope({
+        itemSelector : '.item',
+        masonry : {
+          cornerStampSelector: '.corner-stamp'
+        }
+      });
+      $container.animate({ opacity: 1 });
+    });
+   
+
+  });
+
+  </script>
+
+  </head>
+
+
+  <body>
+  <section id="page">
+  
+    <div id="image_board" class="infinite-scrolling clearfix">
+
+                
+      <div class="item col1 longboarding">
+        <h1 class="item-label">Bear Grizzly Longboard Trucks</h1>
+        <img class="item-image" src=" images/beargrizzly_trucks.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">O-tang Wheels</h1>
+        <img class="item-image" src=" images/otang_wheels2.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon 100-400mm Lens</h1>
+        <img class="item-image" src=" images/canon_100-400.jpg"/>
+      </div>
+      <div class="item col1 photography">
+        <h1 class="item-label">Panasonic AG-HVX200 P2 Pro HD</h1>
+        <img class="item-image" src=" images/HD_video.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">NIKKOR 35mm Wide Angle Lens</h1>
+        <img class="item-image" src=" images/35_lens.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">NIKKOR 50mm Wide Angle Lens</h1>
+        <img class="item-image" src=" images/50mm_lens.jpg"/>
+      </div>
+   
+      <div class="item col1 photography">
+        <h1 class="item-label">Pentax-KX Camera Body</h1>
+        <img class="item-image" src=" images/pentax-kx.jpg"/>
+      </div>
+
+      <div class="item col1 longboarding">
+        <h1 class="item-label">O-Tang Wheels</h1>
+        <img class="item-image" src=" images/otang_wheels.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon Rebel T3i</h1>
+        <img class="item-image" src=" images/Canon_T3i.jpg"/>
+      </div>
+
+      <div class="item col1 photography">
+        <h1 class="item-label">Canon 270 or Canon 430 Flash</h1>
+        <img class="item-image" src=" images/canon_flash.jpg"/>
+      </div>
+
+
+    </div> <!-- image_board -->
+
+    
+  </section> <!-- page -->
+  </body>
+
+</html>
