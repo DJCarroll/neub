@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
 	
-	attr_accessible :title, :category, :location, :price, :date, :rating, :condition, :seller, :description
+	attr_accessible :title, :category, :location, :price, :date, :rating, :condition, :seller, :description, :item_images
 
 	validates :title,	:presence => true,
 						:length => {:minimum => 5}
@@ -14,5 +14,5 @@ class Item < ActiveRecord::Base
 	validates :description,	:presence => true,
 							:length => {:minimum => 5}
 
-
+  # Add validation for item images to produce error when no image and insert a default image
 end

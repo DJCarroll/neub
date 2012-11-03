@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20121103042603) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.Array    "item_images"
   end
 
 end
