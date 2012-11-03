@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  address: MyString
+  seller_rating: 1
+  friendliness: 1
+  helpfulness: 1
+  email: MyString
+  renter_rating: 1
+
+two:
+  name: MyString
+  address: MyString
+  seller_rating: 1
+  friendliness: 1
+  helpfulness: 1
+  email: MyString
+  renter_rating: 1

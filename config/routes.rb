@@ -1,4 +1,10 @@
 RailsinstallerDemo::Application.routes.draw do
+  resources :users
+
+  resources :items
+
+  resources :homes
+
   get "welcome/index"
 
   # The priority is based upon order of creation:

@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @home.title %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @home.category %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @home.location %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @home.price %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @home.date %>
+</p>
+
+<p>
+  <b>Rating:</b>
+  <%= @home.rating %>
+</p>
+
+<p>
+  <b>Condition:</b>
+  <%= @home.condition %>
+</p>
+
+<p>
+  <b>Seller:</b>
+  <%= @home.seller %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @home.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_home_path(@home) %> |
+<%= link_to 'Back', homes_path %>
